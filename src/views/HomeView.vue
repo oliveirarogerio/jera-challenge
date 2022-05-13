@@ -7,7 +7,7 @@
     <form @submit.prevent="SearchMovies()" class="search-box">
       <input
         type="text"
-        placeholder="What are you looking for? "
+        placeholder="Qual filme esta procurando?"
         v-model="search"
       />
       <input type="submit" value="Search" />

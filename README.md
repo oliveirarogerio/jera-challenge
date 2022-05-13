@@ -10,7 +10,7 @@ http://localhost:8080/
 
 ```
 
-ou se prefirir com npm
+Rodando com npm:
 ```
 npm install
 npm run serve

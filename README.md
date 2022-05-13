@@ -1,29 +1,26 @@
-# movie-tut
+# Jera Challenge
 
-## Project setup
+# Tutorial de execução:
+
+
 ```
 yarn install
-```
-
-### Compiles and hot-reloads for development
-```
 yarn serve
+http://localhost:8080/
+
 ```
 
-### Compiles and minifies for production
+Rodando com npm:
 ```
-yarn build
-```
-
-### Run your unit tests
-```
-yarn test:unit
+npm install
+npm run serve
+http://localhost:8080/
 ```
 
-### Lints and fixes files
-```
-yarn lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+# Ferramentas
+
+- Vue.js 3
+- Vuex
+- Javascript

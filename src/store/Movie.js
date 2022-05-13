@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createStore } from "vuex";
 
 export default createStore({
@@ -7,10 +8,24 @@ export default createStore({
   },
   mutations: {
     saveMovie(state, movie) {
-      state.saveList.push(movie);
+      const findMovie = state.saveList.find((m) => m.id === movie.id);
+      console.log(findMovie);
+
+      if (findMovie) {
+        state.saveList = state.saveList.filter((m) => m.id !== movie.id);
+      } else {
+        state.saveList.push(movie);
+      }
     },
     watchMovie(state, movie) {
-      state.watchedList.push(movie);
+      const findMovie = state.watchedList.find((m) => m.id === movie.id);
+      console.log(findMovie);
+
+      if (findMovie) {
+        state.watchedList = state.watchedList.filter((m) => m.id !== movie.id);
+      } else {
+        state.watchedList.push(movie);
+      }
     },
   },
   actions: {

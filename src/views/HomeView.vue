@@ -1,26 +1,5 @@
 <template>
   <div class="home">
-    <div class="feature-card">
-      <router-link to="/movie/438631-dune">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/pt/c/c0/Dune_2020.jpeg"
-          alt="Dune Poster"
-          class="featured-img"
-        />
-        <div class="detail">
-          <h3>Dune</h3>
-          <p>
-            Paul Atreides, a brilliant and gifted young man born into a great
-            destiny beyond his understanding, must travel to the most dangerous
-            planet in the universe to ensure the future of his family and his
-            people. As malevolent forces explode into conflict over the planet's
-            exclusive supply of the most precious resource in existence-a
-            commodity capable of unlocking humanity's greatest potential-only
-            those who can conquer their fear will survive.
-          </p>
-        </div>
-      </router-link>
-    </div>
     <form @submit.prevent="SearchMovies()" class="search-box">
       <input
         type="text"
@@ -29,94 +8,21 @@
       />
       <input type="submit" value="Search" />
     </form>
-    <div class="movies-list">
-      <p>savedList</p>
-      <div class="movie" v-for="movie in savedList" :key="movie.id">
-        <div class="movie-link">
-          <div class="product-image">
-            <router-link :to="'/movie/' + movie.id" class="movie-link">
-              <img
-                :src="getImageFullURL(movie.poster_path)"
-                alt="Movie Poster"
-              />
-            </router-link>
-            <div class="type">{{ movie.type }}</div>
-          </div>
 
-          <div class="detail">
-            <p class="y">{{ movie.release_date }}</p>
-            <h3>{{ movie.title }}</h3>
-
-            <button @click="saveMovie(movie)" class="saveButton">
-              <bookmark-icon size="24" />
-            </button>
-
-            <button @click="watchMovie(movie)" class="watchButton">
-              <eye-icon size="24" />
-            </button>
-          </div>
-        </div>
-      </div>
+    <div>
+      <h1>Filmes salvos</h1>
+       <MovieList :movies="savedList" />
     </div>
-
-    <div class="movies-list">
-      <p>watchedMovies</p>
-      <div class="movie" v-for="movie in watchedMovies" :key="movie.id">
-        <div class="movie-link">
-          <div class="product-image">
-            <router-link :to="'/movie/' + movie.id" class="movie-link">
-              <img
-                :src="getImageFullURL(movie.poster_path)"
-                alt="Movie Poster"
-              />
-            </router-link>
-            <div class="type">{{ movie.type }}</div>
-          </div>
-
-          <div class="detail">
-            <p class="y">{{ movie.release_date }}</p>
-            <h3>{{ movie.title }}</h3>
-
-            <button @click="saveMovie(movie)" class="saveButton">
-              <bookmark-icon size="24" />
-            </button>
-
-            <button @click="watchMovie(movie)" class="watchButton">
-              <eye-icon size="24" />
-            </button>
-          </div>
-        </div>
-      </div>
+   <div>
+     <h1>Filmes assistidos</h1>
+     <MovieList :movies="watchedMovies" />
+   </div>
+    <div>
+      <h1>Lista de Filmes</h1>
+ <MovieList :movies="movies" />
     </div>
-
-    <div class="movies-list">
-      <div class="movie" v-for="movie in movies" :key="movie.id">
-        <div class="movie-link">
-          <div class="product-image">
-            <router-link :to="'/movie/' + movie.id" class="movie-link">
-              <img
-                :src="getImageFullURL(movie.poster_path)"
-                alt="Movie Poster"
-              />
-            </router-link>
-            <div class="type">{{ movie.type }}</div>
-          </div>
-
-          <div class="detail">
-            <p class="y">{{ movie.release_date }}</p>
-            <h3>{{ movie.title }}</h3>
-
-            <button @click="saveMovie(movie)" class="saveButton">
-              <bookmark-icon size="24" />
-            </button>
-
-            <button @click="watchMovie(movie)" class="watchButton">
-              <eye-icon size="24" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+   
+    
   </div>
 </template>
 
@@ -124,11 +30,10 @@
 import { computed, ref } from "vue";
 import env from "@/env.js";
 import { useStore } from "vuex";
-import { BookmarkIcon, EyeIcon } from "@vue-icons/feather";
+import MovieList from "@/components/MovieList.vue";
 export default {
   components: {
-    "bookmark-icon": BookmarkIcon,
-    "eye-icon": EyeIcon,
+    MovieList,
   },
   setup() {
     const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
@@ -150,16 +55,14 @@ export default {
     }
 
     function saveMovie(movie) {
-      console.log(movie);
-      console.log(store);
+    
       store.dispatch("saveMovie", movie);
     }
 
     function watchMovie(movie) {
-      console.log(movie);
-      console.log(store);
+      
       store.dispatch("watchMovie", movie);
-      console.log(watchedMovies.value);
+    
     }
 
     const SearchMovies = () => {
@@ -192,26 +95,6 @@ export default {
 
 <style lang="scss">
 .home {
-  .saveButton {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    background-color: #496583;
-    border: 0;
-  }
-
-  .watchButton {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    background-color: #496583;
-    border: 0;
-  }
-
   .feature-card {
     position: relative;
 
@@ -291,64 +174,6 @@ export default {
 
         &:active {
           background-color: #3b8070;
-        }
-      }
-    }
-  }
-
-  .movies-list {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0px 8px;
-
-    .movie {
-      max-width: 25%;
-      flex: 2 2 50%;
-      padding: 16px 8px;
-
-      .movie-link {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-
-        .product-image {
-          position: relative;
-          display: block;
-
-          img {
-            display: block;
-            width: 100%;
-            height: 275px;
-            object-fit: cover;
-          }
-
-          .type {
-            position: absolute;
-            padding: 8px 16px;
-            background-color: #42b883;
-            color: #fff;
-            bottom: 16px;
-            left: 0px;
-            text-transform: capitalize;
-          }
-        }
-
-        .detail {
-          background-color: #496583;
-          padding: 16px 8px;
-          flex: 1 1 100%;
-          border-radius: 0px 0px 8px 8px;
-
-          .y {
-            color: #aaa;
-            font-size: 14px;
-          }
-
-          h3 {
-            color: #fff;
-            font-weight: 600;
-            font-size: 18px;
-          }
         }
       }
     }

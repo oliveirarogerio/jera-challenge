@@ -1,7 +1,6 @@
 <template>
   <header>
     <router-link to="/">
-      <button type="button" @click="menu" class="menu"></button>
       <h1><span>Vue</span>Movies</h1>
     </router-link>
   </header>
@@ -11,29 +10,17 @@
 </template>
 
 <script>
-
-
 export default {
-  setup(){
-
-    const menu = () => {
-
-
-
-    }
-return{menu}
-  }
-
-}
-
+  setup() {
+  },
+};
 </script>
 
 <style lang="scss">
-
-  .menu{
-    position: absolute;
-    left: 20px;
-  }
+.menu {
+  position: absolute;
+  left: 20px;
+}
 
 * {
   margin: 0;
@@ -62,13 +49,13 @@ header {
   background-color: #2c3d4e;
   box-shadow: Opx 0px 6px rgba(0, 0, 0, 0.2);
 
-  h1{
-    color: #FFF;
+  h1 {
+    color: #fff;
     font-size: 28px;
   }
 
-  span{
-    color: #42B883
+  span {
+    color: #42b883;
   }
 }
 </style>

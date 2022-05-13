@@ -1,5 +1,9 @@
 <template>
   <div class="home">
+    <router-link to="/movie/recommendation">
+      <h1>Recomendações</h1>
+    </router-link>
+
     <form @submit.prevent="SearchMovies()" class="search-box">
       <input
         type="text"
@@ -11,18 +15,16 @@
 
     <div>
       <h1>Filmes salvos</h1>
-       <MovieList :movies="savedList" />
+      <MovieList :movies="savedList" />
     </div>
-   <div>
-     <h1>Filmes assistidos</h1>
-     <MovieList :movies="watchedMovies" />
-   </div>
+    <div>
+      <h1>Filmes assistidos</h1>
+      <MovieList :movies="watchedMovies" />
+    </div>
     <div>
       <h1>Lista de Filmes</h1>
- <MovieList :movies="movies" />
+      <MovieList :movies="movies" />
     </div>
-   
-    
   </div>
 </template>
 
@@ -55,14 +57,11 @@ export default {
     }
 
     function saveMovie(movie) {
-    
       store.dispatch("saveMovie", movie);
     }
 
     function watchMovie(movie) {
-      
       store.dispatch("watchMovie", movie);
-    
     }
 
     const SearchMovies = () => {

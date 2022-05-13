@@ -1,5 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { createStore } from "vuex";
+import VuexPersist from "vuex-persist";
+
+const vuexLocalStorage = new VuexPersist({
+  key: "vuex",
+  storage: window.localStorage,
+});
 
 export default createStore({
   state: {
@@ -38,4 +44,5 @@ export default createStore({
   },
   getters: {},
   modules: {},
+  plugins: [vuexLocalStorage.plugin],
 });

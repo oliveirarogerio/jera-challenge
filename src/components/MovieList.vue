@@ -91,8 +91,8 @@ export default {
     }
   }
   .movie {
-    max-width: 10%;
-    flex: 1 1 10%;
+    max-width: 15%;
+    flex: 2 2 15%;
     padding: 16px 8px;
 
     .movie-link {

@@ -1,5 +1,11 @@
 # Jera Challenge
 
+# Link do host
+```
+https://jera-challenge.vercel.app/
+
+```
+
 # Tutorial de execução:
 
 

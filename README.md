@@ -1,18 +1,25 @@
-<h1 align="center">Desafio técnico Estágio Jera</h1>
+# Jera Challenge
 
+# Tutorial de execução:
 
-<h1 align="center">Setup da aplicação</h1>
-###
+```
+
+- passo 1:
+
 ```
 yarn install
-```
-
-<h1 align="center">Rodando a aplicação</h1>
-```
 yarn serve
-http://localhost:8080/
+
+
+```
+ou se prefirir com npm
+```
+npm install
+npm run serve
 
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# Ferramentas
+
+- Vue.js 3
+- Vuex

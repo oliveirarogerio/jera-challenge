@@ -29,17 +29,16 @@
       />
       <input type="submit" value="Search" />
     </form>
-      
-      <div class="save-list">
-      
-      <div class="movie" v-for="movie in {{$store.state.saveList}}" :key="movie.id">
-      <div class="movie-link">
-  <div>
-  
-    </div>
-        <div class="product-image">
-          <router-link :to="'/movie/' + movie.id" class="movie-link">
-            <img :src="getImageFullURL(movie.poster_path)" alt="Movie Poster" />
+    <div class="movies-list">
+      <p>savedList</p>
+      <div class="movie" v-for="movie in savedList" :key="movie.id">
+        <div class="movie-link">
+          <div class="product-image">
+            <router-link :to="'/movie/' + movie.id" class="movie-link">
+              <img
+                :src="getImageFullURL(movie.poster_path)"
+                alt="Movie Poster"
+              />
             </router-link>
             <div class="type">{{ movie.type }}</div>
           </div>
@@ -47,25 +46,29 @@
           <div class="detail">
             <p class="y">{{ movie.release_date }}</p>
             <h3>{{ movie.title }}</h3>
-            
-             <button @click="saveMovie(movie)" class="saveButton">
-               <bookmark-icon size="24"/>
-             </button>
 
-             <button @click="watchMovie(movie)" class="watchButton">
-               <eye-icon size="24"/>
-             </button>
+            <button @click="saveMovie(movie)" class="saveButton">
+              <bookmark-icon size="24" />
+            </button>
+
+            <button @click="watchMovie(movie)" class="watchButton">
+              <eye-icon size="24" />
+            </button>
           </div>
-            </div>
-           
+        </div>
       </div>
     </div>
+
     <div class="movies-list">
-      <div class="movie" v-for="movie in movies" :key="movie.id">
-      <div class="movie-link">
-        <div class="product-image">
-          <router-link :to="'/movie/' + movie.id" class="movie-link">
-            <img :src="getImageFullURL(movie.poster_path)" alt="Movie Poster" />
+      <p>watchedMovies</p>
+      <div class="movie" v-for="movie in watchedMovies" :key="movie.id">
+        <div class="movie-link">
+          <div class="product-image">
+            <router-link :to="'/movie/' + movie.id" class="movie-link">
+              <img
+                :src="getImageFullURL(movie.poster_path)"
+                alt="Movie Poster"
+              />
             </router-link>
             <div class="type">{{ movie.type }}</div>
           </div>
@@ -74,55 +77,90 @@
             <p class="y">{{ movie.release_date }}</p>
             <h3>{{ movie.title }}</h3>
 
-             <button @click="saveMovie(movie)" class="saveButton">
-               <bookmark-icon size="24"/>
-             </button>
+            <button @click="saveMovie(movie)" class="saveButton">
+              <bookmark-icon size="24" />
+            </button>
 
-             <button @click="watchMovie(movie)" class="watchButton">
-               <eye-icon size="24"/>
-             </button>
+            <button @click="watchMovie(movie)" class="watchButton">
+              <eye-icon size="24" />
+            </button>
           </div>
-            </div>
-           
+        </div>
+      </div>
+    </div>
+
+    <div class="movies-list">
+      <div class="movie" v-for="movie in movies" :key="movie.id">
+        <div class="movie-link">
+          <div class="product-image">
+            <router-link :to="'/movie/' + movie.id" class="movie-link">
+              <img
+                :src="getImageFullURL(movie.poster_path)"
+                alt="Movie Poster"
+              />
+            </router-link>
+            <div class="type">{{ movie.type }}</div>
+          </div>
+
+          <div class="detail">
+            <p class="y">{{ movie.release_date }}</p>
+            <h3>{{ movie.title }}</h3>
+
+            <button @click="saveMovie(movie)" class="saveButton">
+              <bookmark-icon size="24" />
+            </button>
+
+            <button @click="watchMovie(movie)" class="watchButton">
+              <eye-icon size="24" />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import env from "@/env.js";
-import {useStore} from 'vuex'
+import { useStore } from "vuex";
 import { BookmarkIcon, EyeIcon } from "@vue-icons/feather";
 export default {
   components: {
-    "bookmark-icon":BookmarkIcon,
-    "eye-icon": EyeIcon
+    "bookmark-icon": BookmarkIcon,
+    "eye-icon": EyeIcon,
   },
   setup() {
     const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
     const search = ref("");
     const movies = ref([]);
 
-    const store = useStore()
+    const store = useStore();
+
+    const watchedMovies = computed(() => {
+      return store.state.watchedList;
+    });
+
+    const savedList = computed(() => {
+      return store.state.saveList;
+    });
 
     function getImageFullURL(path) {
       return `${IMAGE_URL}${path}`;
     }
 
     function saveMovie(movie) {
-      console.log(movie)
-      console.log( store)
-      store.dispatch("saveMovie", movie)
+      console.log(movie);
+      console.log(store);
+      store.dispatch("saveMovie", movie);
     }
 
-     function watchMovie(movie) {
-      console.log(movie)
-      console.log( store)
-      store.dispatch("watchMovie", movie)
+    function watchMovie(movie) {
+      console.log(movie);
+      console.log(store);
+      store.dispatch("watchMovie", movie);
+      console.log(watchedMovies.value);
     }
-
-
 
     const SearchMovies = () => {
       if (search.value != "") {
@@ -132,7 +170,7 @@ export default {
           .then((response) => response.json())
           .then((data) => {
             movies.value = data.results;
-            
+
             search.value = "";
           });
       }
@@ -144,8 +182,9 @@ export default {
       SearchMovies,
       getImageFullURL,
       saveMovie,
-      watchMovie
-      
+      watchMovie,
+      watchedMovies,
+      savedList,
     };
   },
 };
@@ -153,30 +192,25 @@ export default {
 
 <style lang="scss">
 .home {
+  .saveButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    background-color: #496583;
+    border: 0;
+  }
 
-   .saveButton{
-       display: flex;
-       flex-direction: column;
-       justify-content: center;
-       align-items: center;
-       padding: 5px;
-       background-color: #496583;
-       border: 0;
-
-       
-    }
-
-    .watchButton{
-       display: flex;
-       flex-direction: column;
-       justify-content: center;
-       align-items: center;
-       padding: 5px;
-       background-color: #496583;
-       border: 0;
-
-       
-    }
+  .watchButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    background-color: #496583;
+    border: 0;
+  }
 
   .feature-card {
     position: relative;
@@ -191,9 +225,6 @@ export default {
       z-index: 0;
     }
 
-    
-     
-
     .detail {
       position: absolute;
       left: 0;
@@ -203,7 +234,6 @@ export default {
       padding: 16px;
       z-index: 1;
 
-     
       h3 {
         color: #fff;
         margin-bottom: 16x;

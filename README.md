@@ -1,29 +1,16 @@
-# Jera Challenge
+<h1 align="center">Desafio técnico Estágio Jera</h1>
 
 
-## Project setup
+<h1 align="center">Setup da aplicação</h1>
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+<h1 align="center">Rodando a aplicação</h1>
 ```
 yarn serve
-```
+http://localhost:8080/
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Run your unit tests
-```
-yarn test:unit
-```
-
-### Lints and fixes files
-```
-yarn lint
 ```
 
 ### Customize configuration

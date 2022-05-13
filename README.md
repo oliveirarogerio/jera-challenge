@@ -1,4 +1,5 @@
-# movie-tut
+# Jera Challenge
+
 
 ## Project setup
 ```
